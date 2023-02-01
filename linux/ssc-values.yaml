@@ -1,0 +1,14 @@
+imagePullSecrets:
+- name: fortifydocker
+resources: null
+secretRef:
+  keys:
+    httpCertificateKeyPasswordEntry: fortify-service.jks.key.password
+    httpCertificateKeystoreFileEntry: fortify-service.jks
+    httpCertificateKeystorePasswordEntry: fortify-service.jks.password
+    jmvTruststorePasswordEntry: truststore.password
+    jvmTruststoreFileEntry: truststore
+    sscAutoconfigEntry: ssc.autoconfig
+    sscLicenseEntry: fortify.license
+  name: ssc
+urlHost: www.fortifydemo.ot

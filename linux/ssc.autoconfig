@@ -1,0 +1,14 @@
+appProperties:
+  host.validation: false
+
+datasourceProperties:
+  db.username: microfocus
+  db.password: M1cro_F0cus
+
+  jdbc.url: 'jdbc:sqlserver://192.168.35.100:1433;database=ssc_db;sendStringParametersAsUnicode=false;trustServerCertificate=true'
+
+dbMigrationProperties:
+
+  migration.enabled: true
+  migration.username: microfocus
+  migration.password: M1cro_F0cus
