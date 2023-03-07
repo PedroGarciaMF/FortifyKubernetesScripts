@@ -1,13 +1,15 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
- name: lets-encrypt
+  name: lets-encrypt
 spec:
- acme:
-  server: https://acme-staging-v02.api.letsencrypt.org/directory
-  privateKeySecretRef:
-   name: lets-encrypt
-  solvers:
-  - http01:
-    ingress:
-     class: "public"
+  acme:
+    #email: fortify@fortify.lab
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: lets-encrypt-priviate-key
+    solvers:
+    - http01: 
+        ingress:
+          #class: public
+          class: traefik
