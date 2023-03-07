@@ -1,0 +1,66 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: iwa
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iwa-java-deployment
+  namespace: iwa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iwa-java
+  template:
+    metadata:
+      labels:
+        app: iwa-java
+    spec:
+      containers:
+      - image: fortifydocker/iwa-java
+        name: iwa-java
+        ports:
+        - containerPort: 8080
+      nodeSelector:
+        env: dev
+        target: java
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iwa-java-service
+  namespace: iwa
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  selector:
+    app: iwa-java
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: lets-encrypt
+  name: iwa-java-ingress
+  namespace: iwa
+spec:
+  rules:
+  - host: iwa-java.fortify.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: iwa-java-service
+            port:
+              name: http
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - iwa-java.fortify.lab
+    secretName: iwa-java-tls

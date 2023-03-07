@@ -1,0 +1,120 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: iwa
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iwa-db
+  namespace: iwa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iwa-db
+  template:
+    metadata:
+      labels:
+        app: iwa-db
+    spec:
+      containers:
+      - env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          value: Fortify22@OpenText
+        image: mcr.microsoft.com/mssql/server:2017-latest
+        name: iwa-db
+        ports:
+        - containerPort: 1433
+      nodeSelector:
+        env: dev
+        target: dotnet
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iwa-db
+  namespace: iwa
+spec:
+  ports:
+  - name: mssql
+    port: 1433
+  selector:
+    app: iwa-db
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iwa-dotnet-deployment
+  namespace: iwa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iwa-dotnet
+  template:
+    metadata:
+      labels:
+        app: iwa-dotnet
+    spec:
+      containers:
+      - env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Docker
+        - name: ASPNETCORE_URLS
+          value: http://+:80
+        - name: ConnectionStrings__DefaultConnection
+          value: Server=iwa-db;Database=aspnet-iwa-dev;User=sa;Password=Fortify22@OpenText;
+        image: fortifydocker/iwa-dotnet
+        name: iwa-dotnet
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        - containerPort: 443
+          name: https
+          protocol: TCP
+      nodeSelector:
+        env: dev
+        target: dotnet
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iwa-dotnet-service
+  namespace: iwa
+spec:
+  ports:
+  - name: http
+    port: 80
+  - name: https
+    port: 443
+  selector:
+    app: iwa-dotnet
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: lets-encrypt
+  name: iwa-dotnet-ingress
+  namespace: iwa
+spec:
+  rules:
+  - host: iwa-dotnet.fortify.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: iwa-dotnet-service
+            port:
+              name: http
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - iwa-dotnet.fortify.lab
+    secretName: iwa-dotnet-tls
