@@ -8,7 +8,7 @@ To create your Kubernetes Cluster for Fortify on a bare metal machine running Wi
     a.	Vagrant will create 3 Virtual Machines under ```.vagrant\machines```.
 5)	User ```vagrant ssh srv-master``` to access the master node and proceed with the manual configuration.
     a.	When prompted for password just type ```vagrant```.
-6)	Add the worker nodes to the hosts file
+6)	Add the worker nodes to the hosts file.
 ```
 192.168.50.11   srv-worker-1
 192.168.50.12   srv-worker-2
