@@ -22,7 +22,7 @@ To create your Kubernetes Cluster for Fortify on a bare metal machine running Wi
 ```
 ```sudo vim /etc/hosts```
 
-7)	User ```vagrant ssh srv-worker-1```’ on a separate terminal to access the first worker node and proceed with the manual configuration.
+7)	User ```vagrant ssh srv-worker-1``` on a separate terminal to access the first worker node and proceed with the manual configuration.
 
     a.	When prompted for password just type ```vagrant```.
 
