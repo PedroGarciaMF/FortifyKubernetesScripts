@@ -1,8 +1,8 @@
 #!/bin/bash
-alias k8s='microk8s'
-alias k8sconfig='microk8s.config'
-alias k8senable='microk8s.enable'
-alias k8sdisable='microk8s.disable'
+alias k8='microk8s'
+alias k8config='microk8s.config'
+alias k8enable='microk8s.enable'
+alias k8disable='microk8s.disable'
 alias k8status='microk8s.status'
 alias kubectl='microk8s.kubectl'
 alias k='kubectl'
