@@ -81,6 +81,7 @@ Vagrant.configure("2") do |config|
       master.vm.provision "shell", path: "setup-master.sh"
       master.vm.provision "shell", inline: <<-SHELL
         sudo usermod -a -G microk8s vagrant
+        newgrp microk8s
       SHELL
     end
 
@@ -97,6 +98,7 @@ Vagrant.configure("2") do |config|
         worker.vm.provision "shell", path: "setup-worker.sh"
         worker.vm.provision "shell", inline: <<-SHELL
           sudo usermod -a -G microk8s vagrant
+          newgrp microk8s
         SHELL
       end
     end
