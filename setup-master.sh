@@ -2,7 +2,7 @@
 # Configure self-signed certificates
 sudo openssl req -x509 -nodes -days 730 -newkey rsa:2048 -keyout /etc/ssl/private/master.key -out /etc/ssl/certs/master.pem -subj "/C=CA/ST=ON/L=Toronto/O=FortifyLab/OU=IT/CN=*.fortify.lab/emailAddress=fortify@fortify.lab"
 sudo apt-get update
-sudo apt-get install -y vim git openjdk-11-jdk dos2unix apt-transport-https net-tools network-manager haproxy
+sudo apt-get install -y vim tmux git openjdk-11-jdk dos2unix apt-transport-https net-tools network-manager haproxy
 # Configure microk8s
 sudo snap install microk8s --classic
 microk8s.status
