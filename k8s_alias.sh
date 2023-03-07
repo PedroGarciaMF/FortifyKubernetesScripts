@@ -33,5 +33,5 @@ alias krmp='kubectl delete pod'
 alias krms='kubectl delete service'
 alias krmns='kubectl delete namespace'
 alias ks='kubectl get services'
-source <(kubectl completion bash) # set up autocomplete in bash
+source <(microk8s.kubectl completion bash) # set up autocomplete in bash
 complete -o default -F __start_kubectl k

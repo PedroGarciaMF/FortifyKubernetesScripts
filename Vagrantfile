@@ -73,9 +73,8 @@ Vagrant.configure("2") do |config|
       master.vm.box = "generic/ubuntu2204"
       master.vm.box_check_update = false
       master.vm.provider "vmware_desktop" do |v|
-        v.vmx["memsize"] = "32768"      
+        v.memory = 32768
         v.vmx["numvcpus"] = "4"
-        v.vmx["cpuid.coresPerSocket"] = "4"
       end
       master.vm.hostname = "srv-master.local"
       master.vm.network "private_network", ip: "192.168.50.10", hostname: true
@@ -90,9 +89,8 @@ Vagrant.configure("2") do |config|
         worker.vm.box = "generic/ubuntu2204"
         worker.vm.box_check_update = false
         worker.vm.provider "vmware_desktop" do |v|
-          v.vmx["memsize"] = "2048"      
+          v.memory = 2048
           v.vmx["numvcpus"] = "2"
-          v.vmx["cpuid.coresPerSocket"] = "2"
         end
         worker.vm.hostname = "srv-worker-#{i}"
         worker.vm.network "private_network", ip: "192.168.50.#{10+i}", hostname: true
@@ -104,4 +102,3 @@ Vagrant.configure("2") do |config|
     end
 
 end
-  

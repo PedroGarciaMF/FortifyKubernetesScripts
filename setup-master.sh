@@ -1,6 +1,6 @@
 #!/bin/bash
 # Create fortify user
-groupadd -r fortify && useradd -m -r -g fortify fortify && usermod -aG sudo fortify
+sudo groupadd -r fortify && sudo useradd -m -r -g fortify fortify && sudo usermod -aG sudo fortify
 sudo su - fortify
 # Configure self-signed certificates
 sudo openssl req -x509 -nodes -days 730 -newkey rsa:2048 -keyout /etc/ssl/private/master.key -out /etc/ssl/certs/master.pem -subj "/C=CA/ST=ON/L=Toronto/O=FortifyLab/OU=IT/CN=*.fortify.lab/emailAddress=fortify@fortify.lab"
